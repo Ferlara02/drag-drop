@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.drag__area{
+    margin: 1rem;
+    padding: 3rem;
+    border: 5px dashed #ddd;
+    width: 100%;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.2s ease;
+}
+.drag__area__active {
+    background-color: #b8d4fe;
+    color: black;
+    border: 5px dashed #618ac9;
+    margin: 1rem;
+    padding: 3rem;
+    width: 100%;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    transition: all 0.2s ease;
+}
+.button{
+    width: 150px;
+    padding: 0.5rem;
+    color: black;
+    background-color: #e2eaf6;
+    border: 0.3px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.button:hover{
+    background-color: white;
+    border: 0.3px solid rgb(157, 156, 156);
+}
+form{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+}
+ul{
+    background-color: #eaeaea;
+    padding: 1rem 1.3rem;
+    border-radius: 1rem;
+}
+li{
+    list-style: none;
+}
