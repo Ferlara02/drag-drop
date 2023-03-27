@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 import "./drag.css"
 
@@ -12,7 +13,8 @@ const DragDrop = () => {
     const [files, setFiles] = useState(null);
     const [loading, setLoading] = useState(false);
     const [class2, setClass2] = useState("drag__area");
-    const [files2, setFiles2] = useState();
+    const [fileLink, setFileLink] = useState(null);
+    
     
 
     const handleDragOver = (event) => {
@@ -31,44 +33,82 @@ const DragDrop = () => {
         inputRef.current.files = files; 
         console.log(files)
     }
-
-
+    /*useEffect(() => {
+        emailjs.send('service_v837z66', 'template_hobti0k', templateParams, "vSSQ5-PdZnwQ58Aof").then((result) => toast.success('Formulario enviado con éxito!', {
+            position: "bottom-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        })).catch((error) => {
+            toast.error(`Algo salio mal ${error}`, {
+                position: "bottom-right",
+                autoClose: 700,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            })}) 
+    }, [fileLink]);
+*/
     /* Peticion a Email JS api */
-    const sendEmail = (e) => {
-        e.preventDefault();
-        setLoading(true)
-        emailjs.sendForm('service_v837z66', 'template_bkkbr1h', form.current, 'vSSQ5-PdZnwQ58Aof')
-            .then((result) => {
-                console.log(result.text);
-                toast.success('Formulario enviado con éxito!', {
-                    position: "bottom-right",
-                    autoClose: 1500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                setLoading(false);
-                setFiles(null)
-            }).catch((error) => {
-                console.log(error);
-                toast.error(`Algo salio mal ${error}`, {
-                    position: "bottom-right",
-                    autoClose: 700,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-                setLoading(false);
-                setFiles(null) 
-            });
-        e.target.reset()
-    }
+    const sendEmail = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+        
+        const formData = new FormData();
+        formData.append("file", files[0]);
+      
+        try {
+          const response = await axios.post("https://file.io/?expires=1d", formData, {
+              headers: {
+                  Authorization: "Bearer <R2SW65R.KTNWQ21-HSW4BZG-MPP3VE8-V3X8QXP>",
+              },
+          });
+          setFileLink(response.data.link);
+          setLoading(false);
+          setFiles(null);
+          emailjs.send('service_v837z66', 'template_bkkbr1h', {file: fileLink}, "vSSQ5-PdZnwQ58Aof").then((result) => toast.success('Formulario enviado con éxito!', {
+            position: "bottom-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        })).catch((error) => {
+            toast.error(`Algo salio mal ${error}`, {
+                position: "bottom-right",
+                autoClose: 700,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            })}) 
+
+        } catch (error) {
+          console.error(error);
+          setLoading(false);
+          toast.error(`Algo salio mal ${error}`, {
+            position: "bottom-right",
+            autoClose: 700,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        }
+      }
     /*---------------*/
 
     return(
