@@ -33,29 +33,7 @@ const DragDrop = () => {
         inputRef.current.files = files; 
         console.log(files)
     }
-    /*useEffect(() => {
-        emailjs.send('service_v837z66', 'template_hobti0k', templateParams, "vSSQ5-PdZnwQ58Aof").then((result) => toast.success('Formulario enviado con éxito!', {
-            position: "bottom-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        })).catch((error) => {
-            toast.error(`Algo salio mal ${error}`, {
-                position: "bottom-right",
-                autoClose: 700,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            })}) 
-    }, [fileLink]);
-*/
+
     /* Peticion a Email JS api */
     const sendEmail = async (event) => {
         event.preventDefault();
